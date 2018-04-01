@@ -1,0 +1,136 @@
+<script src="/js/controllers/projectController.js"></script>
+{{#if successMessage}}
+    <div class="alert alert-success"><strong>Success!</strong> {{successMessage}}</div>
+{{/if}}
+
+{{#if errorMessage}}
+   <div class="alert alert-danger"><strong>Oops!</strong> {{errorMessage}}</div>
+{{/if}}
+    <!-- NAV BAR -->
+  <!-- NAV BAR -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand {{activedash}}" href="/dashboard">20 years of Video Game</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbar-collapse-4">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="{{activeRelational}}"><a href="/relational">Relational</a></li>
+                            <li class="{{activeMongoDB}}"><a href="/mongo">MongoDb</a></li>
+                            <li class="{{activeNeo}}"><a href="/neo">Neo 4j</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    <!-- END OF NAV BAR -->
+<div class="container">
+        <h1>Result from MySQL Data Warehouse</h1>
+</div>  
+  <div id="relational1">
+        <h3> Distribution of No of games in each Year </h3>
+    </div>
+<script>
+  function summary1(){
+
+// set the dimensions of the canvas
+var margin = { top: 20, right: 20, bottom: 170, left: 100 },
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// set the ranges
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+var y = d3.scale.linear().range([height, 0]);
+
+// define the axis
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(10);
+
+var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+        return "<strong>Year:</strong> <span>" + d.name + "</span>" + "<br/>" + "<strong>Count:</strong> <span style='color:red'>" + d.Freq + "</span>";
+    })
+
+// add the SVG element
+var svg = d3.select("body #relational1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
+var url = 'http://localhost:3000/relquery1';
+
+d3.json(url, function(error, data) {
+
+    data.forEach(function(d) {
+        d.name = d.name;
+        d.Freq = +d.Freq;
+    });
+
+    // scale the range of the data
+    x.domain(data.map(function(d) { return d.name; }));
+    y.domain([0, d3.max(data, function(d) { return d.Freq; })]);
+
+
+
+    // add axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", "-.55em")
+        .style("font-size", "15px")
+        .attr("transform", "rotate(-90)");
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-360)")
+        .attr("y", 5)
+        .attr("dy", "-0.29em")
+        .style("font-size", "13px")
+        .style("text-anchor", "end")
+        .text("No of Games");
+
+
+    // Add bar chart
+    svg.selectAll("bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.name); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.Freq); })
+        .attr("height", function(d) { return height - y(d.Freq); })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
+
+
+});
+}
+summary1();
+</script>
