@@ -1,5 +1,5 @@
 {
-  "name": "codeday",
+  "name": "20 years of VideoGames",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -17,6 +17,9 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "handlebars": "^4.0.11",
-    "mysql": "^2.15.0"
+    "mongodb": "^3.0.5",
+    "mongoose": "^5.0.13",
+    "mysql": "^2.15.0",
+    "neo4j-driver": "^1.5.0"
   }
 }

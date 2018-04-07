@@ -9,7 +9,7 @@ router.get('/relational',function(req,res){
 
 router.get('/relquery1', function(req, res) {
 
-    db.query("SELECT G.genre as name, AVG(F.average_score) AS Freq FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre", function(err, results, feilds) {
+    db.query("SELECT G.genre as name, AVG(F.average_score) AS Freq FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre having AVG(F.average_score) > 7", function(err, results, feilds) {
          if (err) {
                 console.error(err);
                 res.statusCode = 500;
