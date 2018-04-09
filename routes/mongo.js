@@ -16,7 +16,7 @@ db.once('open', function() {
 });
 
 
-//DEFINE THE SCHEMA OF THE EACH COLLECTION
+//DEFINE THE SCHEMA OF THE COLLECTION
 var ratingSchema = mongoose.Schema({
     userID: Number,
     movieID: Number,
