@@ -9,11 +9,14 @@ router.get('/neo', function(req, res) {
 });
 
 //Writeyour route for the query
-router.get('/query1',function(req,res){
+router.get('/neoquery1',function(req,res){
 	//Writeyour neo4j  query
-	db('MATCH (n:Person) RETURN n LIMIT 25')
+	resutlArray=[];
+	db('MATCH (fact:fact), (game:GameDimension)WHERE fact.game_id = game.GameID RETURN game.Title AS label,fact.average_score AS value ORDER BY value DESC LIMIT 25')
 	  .on('data', function (result){
-	    res.send(result.n);
+	    resutlArray.push(result);
+	  }).on('end',function(){
+	  	res.send(resutlArray);
 	  });
 });
 

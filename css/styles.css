@@ -216,3 +216,11 @@ body {
         transform: translate(0px,0px);
     }
 }
+
+#tip{
+    
+    position:absolute;
+    display:none;
+    border:1px solid black;
+    padding:4px;
+}

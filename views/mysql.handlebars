@@ -1,0 +1,189 @@
+<script src="/js/controllers/relationalController.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/mysql.css"> {{#if successMessage}}
+<div class="alert alert-success"><strong>Success!</strong> {{successMessage}}</div>
+{{/if}} {{#if errorMessage}}
+<div class="alert alert-danger"><strong>Oops!</strong> {{errorMessage}}</div>
+{{/if}}
+<!-- NAV BAR -->
+<!-- NAV BAR -->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand {{activedash}}" href="/dashboard">20 Years of Games</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-4">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="{{activeRelational}}"><a href="/relational">MySQL</a></li>
+                <li class="{{activeMongoDB}}"><a href="/mongo">MongoDB</a></li>
+                <li class="{{activeNeo}}"><a href="/neo">Neo4j</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+<!-- END OF NAV BAR -->
+<div class="container">
+    <h2>Select your Query</h2>
+    <div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">List of Querys</label>
+                <select class="form-control form-control-lg" id="mysqlQuery" onchange="selectQuery();">
+                    <option>Please Select a values</option>
+                    <option value="1">What are the top 25 rated games in the past 20 years?</option>
+                    <option value="2">What are the games with score>8, editor_choice=y</option>
+                    <option value="3">What is the amount of games by each genre?</option>
+                    <option value="4">What is the average score rating  by each genre?</option>
+                    <option value="5">What are the top 5 popular genres? (editor's choice and average rating both)</option>
+                     <option value="6">What are the top 5 popular genres based on average rating ? </option>
+                    <option value="8">*How has the popularity of genre has changed over the last 20 years? </option>
+                    <option value="9">*What is the most popular genre with respect to a platform?</option>
+                    <option value="10">*Which platforms has the avg rating of games of more than ratings</option>
+                    <option value="11">*What number of games are released on each platform annually?</option>
+                    <!-- <option value="12"></option>
+                    <option value="13"></option>
+                    <option value="14"></option>
+                    <option value="15"></option> -->
+
+
+                    
+                </select>
+            </div>
+            <div class="form-group" id="ratingDiv" style="display: none">
+               <label>Ratings</label>
+               <input type='range' id='range' min='1' max='10' value='0' />
+                <div id='tip'>sad</div>
+            </div>
+             <div class="form-group" id="phraseDiv" style="display: none">
+               <label>Score Phrase</label>
+               <select class="form-control" id="selectPhrase">
+                    <option value="Amazing">Amazing</option>
+                    <option value="Awful">Awful</option>
+                    <option value="Bad">Bad</option>
+                    <option value="Disaster">Disaster</option>
+                    <option value="Good">Good</option>
+                    <option value="Great">Great</option>
+                    <option value="Masterpiece">Masterpiece</option>
+                    <option value="Mediocre">Mediocre</option>
+                    <option value="Okay">Okay</option>
+                    <option value="Painful">Painful</option>
+                    <option value="Unbearable">Unbearable</option>
+               </select>
+            </div>
+            <div class="form-group" id="yearDiv" style="display: none">
+               <label>Year</label>
+                <select>
+                    <option value=1970 >1970 </option>
+                    <option value=1996 >1996 </option>
+                    <option value=1997 >1997 </option>
+                    <option value=1998 >1998 </option>
+                    <option value=1999 >1999 </option>
+                    <option value=2000 >2000 </option>
+                    <option value=2001 >2001 </option>
+                    <option value=2002 >2002 </option>
+                    <option value=2003 >2003 </option>
+                    <option value=2004 >2004 </option>
+                    <option value=2005 >2005 </option>
+                    <option value=2006 >2006 </option>
+                    <option value=2007 >2007 </option>
+                    <option value=2008 >2008 </option>
+                    <option value=2009 >2009 </option>
+                    <option value=2010 >2010 </option>
+                    <option value=2011 >2011 </option>
+                    <option value=2012 >2012 </option>
+                    <option value=2013 >2013 </option>
+                    <option value=2014 >2014 </option>
+                    <option value=2015 >2015 </option>
+                    <option value=2016>2016</option>
+                </select>
+            </div>
+            <div class="form-group" id="monthDiv" style="display: none">
+               <label>Month<label>
+                <select>
+                    <option value=1>January </option>
+                    <option value=2>February </option>
+                    <option value=3>March </option>
+                    <option value=4>April </option>
+                    <option value=5>May </option>
+                    <option value=6>June </option>
+                    <option value=7>July </option>
+                    <option value=8>August </option>
+                    <option value=9>September </option>
+                    <option value=10>October </option>
+                    <option value=11>November </option>
+                    <option value=12>December </option>
+                </select>
+            </div>
+            <div class="form-group" id="genreDiv" style="display: none">
+               <label>Genre<label>
+                <select id="genreSelect" class="form-control form-control-sg">
+                    <option value="Action            ">Action           </option>
+                    <option value="Action, Adventure ">Action, Adventure</option>
+                    <option value="Action, RPG       ">Action, RPG      </option>
+                    <option value="Adventure         ">Adventure        </option>
+                    <option value="Board             ">Board            </option>
+                    <option value="Card              ">Card             </option>
+                    <option value="Fighting          ">Fighting         </option>
+                    <option value="Flight, Action    ">Flight, Action   </option>
+                    <option value="Hunting           ">Hunting          </option>
+                    <option value="Music             ">Music            </option>
+                    <option value="Party             ">Party            </option>
+                    <option value="Platformer        ">Platformer       </option>
+                    <option value="Puzzle            ">Puzzle           </option>
+                    <option value="Puzzle, Action    ">Puzzle, Action   </option>
+                    <option value="Racing            ">Racing           </option>
+                    <option value="Racing, Action    ">Racing, Action   </option>
+                    <option value="RPG               ">RPG              </option>
+                    <option value="Shooter           ">Shooter          </option>
+                    <option value="Simulation        ">Simulation       </option>
+                    <option value="Sports            ">Sports           </option>
+                    <option value="Sports, Action    ">Sports, Action   </option>
+                    <option value="Strategy          ">Strategy         </option>
+                    <option value="Trivia            ">Trivia           </option>
+                    <option value="Wrestling         ">Wrestling        </option>
+                </select>
+            </div>
+             <div class="form-group" id="platformDiv" style="display: none">
+               <label>Platform<label>
+                <select id="platfromSelect" class="form-control form-control-sg">
+                    <option value="Dreamcast           ">Dreamcast           </option>
+                    <option value="Game Boy Advance    ">Game Boy Advance    </option>
+                    <option value="Game Boy Color      ">Game Boy Color      </option>
+                    <option value="GameCube            ">GameCube            </option>
+                    <option value="Genesis             ">Genesis             </option>
+                    <option value="iPad                ">iPad                </option>
+                    <option value="iPhone              ">iPhone              </option>
+                    <option value="Lynx                ">Lynx                </option>
+                    <option value="Macintosh           ">Macintosh           </option>
+                    <option value="Nintendo 3DS        ">Nintendo 3DS        </option>
+                    <option value="Nintendo 64         ">Nintendo 64         </option>
+                    <option value="Nintendo DS         ">Nintendo DS         </option>
+                    <option value="Nintendo DSi        ">Nintendo DSi        </option>
+                    <option value="PC                  ">PC                  </option>
+                    <option value="PlayStation         ">PlayStation         </option>
+                    <option value="PlayStation 2       ">PlayStation 2       </option>
+                    <option value="PlayStation 3       ">PlayStation 3       </option>
+                    <option value="PlayStation 4       ">PlayStation 4       </option>
+                    <option value="PlayStation Portable">PlayStation Portable</option>
+                    <option value="PlayStation Vita    ">PlayStation Vita    </option>
+                    <option value="Wii                 ">Wii                 </option>
+                    <option value="Wii U               ">Wii U               </option>
+                    <option value="Wireless            ">Wireless            </option>
+                    <option value="Xbox                ">Xbox                </option>
+                    <option value="Xbox 360            ">Xbox 360            </option>
+                    <option value="Xbox One             ">Xbox One             </option>
+                </select>
+            </div>
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary" onclick="renderGraph();">Submit</button>
+            </div>
+    </div>
+    <div>
+        <div id="chart-container">FusionCharts will render here</div>
+    </div>
+</div>
