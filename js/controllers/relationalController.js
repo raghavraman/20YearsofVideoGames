@@ -33,16 +33,24 @@ function selectQuery(){
 	var query = $("#mysqlQuery").val();
 	switch(query){
 		case "8": 	$("#genreDiv").show();
+					$("#platformDiv").hide();
+					$("#ratingDiv").hide();
 		break;
 		case "9": 	$("#platformDiv").show();
+					$("#ratingDiv").hide();
+					$("#genreDiv").hide();
 		break;
 		case "10": 	$("#ratingDiv").show();
+					$("#genreDiv").hide();
+					$("#platformDiv").hide();
 		break;
 		case "11": 	$("#platformDiv").show();
+					$("#ratingDiv").hide();
+					$("#genreDiv").hide();
 		break;
 		default:$("#genreDiv").hide();
 		$("#platformDiv").hide();
-		$("#ratingDiv").show();
+		$("#ratingDiv").hide();
 	}
 }
 function renderGraph() {
