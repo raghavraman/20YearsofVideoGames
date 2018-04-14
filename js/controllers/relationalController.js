@@ -48,6 +48,10 @@ function selectQuery(){
 					$("#ratingDiv").hide();
 					$("#genreDiv").hide();
 		break;
+		case "13": 	$("#ratingDiv").show();
+					$("#genreDiv").hide();
+					$("#platformDiv").hide();
+		break;
 		default:$("#genreDiv").hide();
 		$("#platformDiv").hide();
 		$("#ratingDiv").hide();
@@ -79,6 +83,10 @@ function renderGraph() {
     				caption='What number of games are released on '+$("#platfromSelect").val()+' platform annually??'
 
     		break;
+    		case "13":  queryurl = 'http://localhost:3000/mysqlquery' + query +"?rating="+document.getElementById('range').value;
+    				caption='Which platforms has the avg rating of games of more than '+document.getElementById('range').value
+    		
+    		break;
 
 			default:  queryurl = 'http://localhost:3000/mysqlquery' + query;
 		}
@@ -91,8 +99,6 @@ function renderGraph() {
                     chartData = data;
                     var chartProperties = {
                         "caption": caption,
-                        "xAxisName": "Player",
-                        "yAxisName": "Wickets Taken",
                         "rotatevalues": "1",
                         "theme": "zune",
 
@@ -160,13 +166,18 @@ function renderGraph() {
                                         radElem = radio[i];
                                         if (radElem.type === 'radio') {
                                             radElem.onchange = function() {
+                                            	 controllers.innerHTML = "<form><label style='display:inline;margin-bottom:0;'><input name='chart-type' id='change-chart-type-line' type='radio' value='line' /> Line chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-bar' type='radio' value='bar2d' />&nbsp;<label for='change-chart-type-bar' style='display:inline;margin-bottom:0;'>Bar chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-column' type='radio' value='column2d' checked='true' />&nbsp;<label for='change-chart-type-column' style='display:inline;margin-bottom:0;'>Column chart</label></form>";
                                                 val = this.getAttribute('value');
                                                 val && evt.sender.chartType(val);
-                                                controllers.innerHTML = "<form><label style='display:inline;margin-bottom:0;'><input name='chart-type' id='change-chart-type-line' type='radio' value='line' /> Line chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-bar' type='radio' value='bar2d' />&nbsp;<label for='change-chart-type-bar' style='display:inline;margin-bottom:0;'>Bar chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-column' type='radio' value='column2d' checked='true' />&nbsp;<label for='change-chart-type-column' style='display:inline;margin-bottom:0;'>Column chart</label></form>";
+                                                
                                             };
+
                                         }
                                     }
                                 }
+                            },
+                            "fusionchartsdataplotclick": function(evt, args) {
+                            	console.log("asf");
                             }
                         }
                     }).render();

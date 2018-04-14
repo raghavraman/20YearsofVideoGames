@@ -196,9 +196,12 @@ router.get('/mysqlquery11', function(req, res) {
             res.send(results);
         }); 
 });
+
+// How many games were released in each year?--
+
 router.get('/mysqlquery12', function(req, res) {
 
-    db.query("SELECT G.genre as label, AVG(F.average_score) AS value FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre LIMIT 5", function(err, results, feilds) {
+    db.query("SELECT T.year as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F WHERE F.time_id = T.time_id GROUP BY T.year", function(err, results, feilds) {
          if (err) {
                 console.error(err);
                 res.statusCode = 500;
@@ -211,9 +214,15 @@ router.get('/mysqlquery12', function(req, res) {
             res.send(results);
         }); 
 });
+
+// How many games were released each year more than a particular rating?(high rated is rating >=8 --
+
+
+
 router.get('/mysqlquery13', function(req, res) {
 
-    db.query("SELECT G.genre as label, AVG(F.average_score) AS value FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre LIMIT 5", function(err, results, feilds) {
+    var rating = req.query.rating;
+    db.query('SELECT T.year as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F WHERE F.time_id = T.time_id AND F.average_score >= '+rating+' GROUP BY T.year', function(err, results, feilds) {
          if (err) {
                 console.error(err);
                 res.statusCode = 500;
