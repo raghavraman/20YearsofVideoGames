@@ -1,0 +1,68 @@
+<script src="/js/controllers/analysisController.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/mysql.css"> {{#if successMessage}}
+<div class="alert alert-success"><strong>Success!</strong> {{successMessage}}</div>
+{{/if}} {{#if errorMessage}}
+<div class="alert alert-danger"><strong>Oops!</strong> {{errorMessage}}</div>
+{{/if}}
+<!-- NAV BAR -->
+<!-- NAV BAR -->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand {{activedash}}" href="/dashboard">20 Years of Games</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-4">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="{{activeRelational}}"><a href="/relational">MySQL</a></li>
+                <li class="{{activeMongoDB}}"><a href="/mongo">MongoDB</a></li>
+                <li class="{{activeNeo}}"><a href="/neo">Neo4j</a></li>
+                <li class="{{activeAnaly}}"><a href="/analysis">Analysis</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+<!-- END OF NAV BAR -->
+<div class="container">
+    <h2>Perform Analysis</h2>
+    <div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">List of Querys</label>
+            <select class="form-control form-control-lg" id="mysqlQuery" onchange="renderGraph();">
+                <option>Please Select a values</option>
+                <option value="1">What are the top 25 rated games in the past 20 years?</option>
+                <option value="2">What are the games with score>8, editor_choice=y</option>
+                <option value="3">What is the amount of games by each genre?</option>
+                <option value="4">What are the top 5 popular genres based on editor's choice ?</option>
+                <option value="5">Which is the year with the greatest avg_rating -</option>
+            </select>
+        </div>
+    </div>
+    <h3>The Result are given in milliseconds</h3>
+     <div id="Results">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">MYSQL Without View</th>
+              <th scope="col">MYSQL With View</th>
+              <th scope="col">NEO4J Without View</th>
+              <th scope="col">NEO4j With View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span id="mysql"></span></td>
+              <td><span id="mysqlV"></span></td>
+              <td><span id="neo"></span></td>
+              <td><span id="neoV"></span></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>

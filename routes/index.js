@@ -42,9 +42,41 @@ router.get('/summary2', function(req, res) {
             }); 
     });
 
+
+router.get('/summary3', function(req, res) {
+    db.query('SELECT platform as name,count(*) as Freq from odb group by platform having count(*) >500', function(err, results, feilds) {
+             if (err) {
+                    console.error(err);
+                    res.statusCode = 500;
+                    res.send({
+                        result: 'error',
+                        err:    err.code
+                    });
+                }
+                
+                res.send(results);
+            }); 
+    });
+
+router.get('/summary4', function(req, res) {
+    db.query('SELECT score_phrase as name,count(*) as Freq from odb group by score_phrase', function(err, results, feilds) {
+             if (err) {
+                    console.error(err);
+                    res.statusCode = 500;
+                    res.send({
+                        result: 'error',
+                        err:    err.code
+                    });
+                }
+                
+                res.send(results);
+            }); 
+    });
+
 router.use(require('./relational'));
 router.use(require('./mongo'));
 router.use(require('./neo'));
+router.use(require('./analysis'));
 
 
 module.exports = router;

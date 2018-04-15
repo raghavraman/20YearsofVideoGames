@@ -166,7 +166,7 @@ function renderGraph() {
                 var chartProperties = {
                     "caption": caption,
                     "rotatevalues": "1",
-                    "theme": "zune",
+                    "theme": "carbon",
 
                      //Cosmetics
 	                "baseFontColor" : "#333333",
@@ -175,7 +175,7 @@ function renderGraph() {
 	                "subcaptionFontSize" : "14",
 	                "subcaptionFontBold" : "0",
 	                "showborder": "0",
-	                "paletteColors" : "#0075c2",
+	                "paletteColors" : "#1aaf5d",
 	                "bgcolor": "#FFFFFF",
 	                "showalternatehgridcolor": "0",
 	                "showplotborder": "0",
@@ -201,6 +201,7 @@ function renderGraph() {
                 FusionCharts.ready(function () {
                 apiChart = new FusionCharts({
                     type: 'column2d',
+                    theme: 'carbon',
                     renderAt: 'chart-container',
                     width: '100%',
                     height: '100%',
@@ -236,14 +237,34 @@ function renderGraph() {
                                             val = this.getAttribute('value');
                                             val && evt.sender.chartType(val);
                                             
+                                        };	
+                                    }
+                                }
+                            }else{
+                            	controllers = evt.sender._controllers = document.createElement("div");
+                                controllers.innerHTML = "<form><label style='display:inline;margin-bottom:0;'><input name='chart-type' id='change-chart-type-line' type='radio' value='line' /> Line chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-bar' type='radio' value='bar2d' />&nbsp;<label for='change-chart-type-bar' style='display:inline;margin-bottom:0;'>Bar chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-column' type='radio' value='column2d' checked='true' />&nbsp;<label for='change-chart-type-column' style='display:inline;margin-bottom:0;'>Column chart</label></form>";
+                                controllers.style.cssText = "text-align: Center;"
+                                var clearText = args.container.firstChild;
+                                while (clearText) {
+                                    ((clearText.nodeType === 3) || (clearText.nodeName === "#text")) && clearText.parentNode.removeChild(clearText);
+                                    clearText = clearText.nextSibling;
+                                }
+                                args.container.appendChild(controllers);
+
+                                radio = controllers.getElementsByTagName('input');
+                                for (i = 0; i < radio.length; i++) {
+                                    radElem = radio[i];
+                                    if (radElem.type === 'radio') {
+                                        radElem.onchange = function() {
+                                        	 controllers.innerHTML = "<form><label style='display:inline;margin-bottom:0;'><input name='chart-type' id='change-chart-type-line' type='radio' value='line' /> Line chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-bar' type='radio' value='bar2d' />&nbsp;<label for='change-chart-type-bar' style='display:inline;margin-bottom:0;'>Bar chart</label>&nbsp;&nbsp;<input name='chart-type' id='change-chart-type-column' type='radio' value='column2d' checked='true' />&nbsp;<label for='change-chart-type-column' style='display:inline;margin-bottom:0;'>Column chart</label></form>";
+                                            val = this.getAttribute('value');
+                                            val && evt.sender.chartType(val);
+                                            
                                         };
 
                                     }
                                 }
                             }
-                        },
-                        "fusionchartsdataplotclick": function(evt, args) {
-                        	console.log("asf");
                         }
                     }
                 }).render();

@@ -19,6 +19,8 @@
     "express-session": "^1.15.6",
     "handlebars": "^4.0.11",
     "mongoose": "^5.0.14",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "node-statsd": "^0.1.1",
+    "response-time": "^2.3.2"
   }
 }

@@ -34,6 +34,16 @@
         <p>A minimum of 500 games in each genre is selcted and grouped</p>
         <svg id="summary2" width="800" height="600"></svg>
     </div>
+     <div >
+        <h3> Distribution Platform</h3>
+        <p>Platform with minimum 500 games are selcted and grouped</p>
+        <svg id="summary3" width="800" height="600"></svg>
+    </div>
+    <div>
+        <h3> Distribution by Score Phrase</h3>
+        <p>List of Score Phrase and the games by the count</p>
+        <svg id="summary4" width="800" height="600"></svg>
+    </div>
 </div>
 <script>
   function summary1(){
@@ -164,11 +174,9 @@ var label = d3.svg.arc()
     .outerRadius(radius - 40)
     .innerRadius(radius - 40);
 var url= "http://localhost:3000/summary2";
-debugger;
 d3.json(url, function(error, data) {
   if (error) throw error;
 
-  debugger;
   var arc = g.selectAll(".arc")
     .data(pie(data))
     .enter().append("g")
@@ -189,4 +197,115 @@ d3.json(url, function(error, data) {
 
 }
 summary2();
+</script>
+<script>
+function summary3() {
+ var svg = d3.select("#summary3"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height"),
+    radius = Math.min(width, height) / 2,
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var color = d3.scale.category20c(); 
+
+
+var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+        return "<strong>Genre:</strong> <span>" + d.data.name + "</span>" + "<br/>" + "<strong>Count:</strong> <span style='color:red'>" + d.data.Freq + "</span>";
+    })
+
+
+svg.call(tip);
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.Freq; });
+
+var path = d3.svg.arc()
+    .outerRadius(radius - 1)
+    .innerRadius(0);
+
+var label = d3.svg.arc()
+    .outerRadius(radius - 40)
+    .innerRadius(radius - 40);
+var url= "http://localhost:3000/summary3";
+d3.json(url, function(error, data) {
+  if (error) throw error;
+
+  var arc = g.selectAll(".arc")
+    .data(pie(data))
+    .enter().append("g")
+    .attr("class", "arc")
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
+
+  arc.append("path")
+      .attr("d", path)
+      .attr("fill", function(d) { return color(d.data.name); });
+
+  arc.append("text")
+      .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+      .attr("dy", "0.35em")
+      .style("font-size", "13px")
+      .text(function(d) { return d.data.name; });
+});
+
+}
+summary3();
+</script>
+<script>
+function summary4() {
+ var svg = d3.select("#summary4"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height"),
+    radius = Math.min(width, height) / 2,
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var color = d3.scale.category20c(); 
+
+
+var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+        return "<strong>Genre:</strong> <span>" + d.data.name + "</span>" + "<br/>" + "<strong>Count:</strong> <span style='color:red'>" + d.data.Freq + "</span>";
+    })
+
+
+svg.call(tip);
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.Freq; });
+
+var path = d3.svg.arc()
+    .outerRadius(radius - 1)
+    .innerRadius(0);
+
+var label = d3.svg.arc()
+    .outerRadius(radius - 40)
+    .innerRadius(radius - 40);
+var url= "http://localhost:3000/summary4";
+d3.json(url, function(error, data) {
+  if (error) throw error;
+  var arc = g.selectAll(".arc")
+    .data(pie(data))
+    .enter().append("g")
+    .attr("class", "arc")
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
+
+  arc.append("path")
+      .attr("d", path)
+      .attr("fill", function(d) { return color(d.data.name); });
+
+  arc.append("text")
+      .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+      .attr("dy", "0.35em")
+      .style("font-size", "13px")
+      .text(function(d) { return d.data.name; });
+});
+
+}
+summary4();
 </script>
