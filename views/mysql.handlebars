@@ -47,10 +47,13 @@
                     <option value="11">*What number of games are released on each platform annually?</option>
                      <option value="12">How many games were released in each year?</option>
                     <option value="13">// How many games were released each year more than a particular rating</option>
-                    <!--<option value="14"></option>
-                    <option value="15"></option> -->
-
-
+                    <option value="14">No of games in each month for particular year and rating</option>
+                    <option value="15">No of games in each month for particular year and genre</option>
+                    <option value="16">No of games in each month for particular year and platorm</option>
+                    <option value="17">No of games in each month for particular year and genre and rating</option>
+                    <option value="18">No of games in each month for particular year and 
+                    genre and particular platform</option>
+                    <option value="19">No of games in each month for particular year and genre and particular platform and ranging</option>
                     
                 </select>
             </div>
@@ -59,26 +62,9 @@
                <input type='range' id='range' min='1' max='10' value='0' />
                 <div id='tip'>sad</div>
             </div>
-             <div class="form-group" id="phraseDiv" style="display: none">
-               <label>Score Phrase</label>
-               <select class="form-control" id="selectPhrase">
-                    <option value="Amazing">Amazing</option>
-                    <option value="Awful">Awful</option>
-                    <option value="Bad">Bad</option>
-                    <option value="Disaster">Disaster</option>
-                    <option value="Good">Good</option>
-                    <option value="Great">Great</option>
-                    <option value="Masterpiece">Masterpiece</option>
-                    <option value="Mediocre">Mediocre</option>
-                    <option value="Okay">Okay</option>
-                    <option value="Painful">Painful</option>
-                    <option value="Unbearable">Unbearable</option>
-               </select>
-            </div>
             <div class="form-group" id="yearDiv" style="display: none">
                <label>Year</label>
-                <select>
-                    <option value=1970 >1970 </option>
+                <select id="selectYear">
                     <option value=1996 >1996 </option>
                     <option value=1997 >1997 </option>
                     <option value=1998 >1998 </option>
@@ -100,23 +86,6 @@
                     <option value=2014 >2014 </option>
                     <option value=2015 >2015 </option>
                     <option value=2016>2016</option>
-                </select>
-            </div>
-            <div class="form-group" id="monthDiv" style="display: none">
-               <label>Month<label>
-                <select>
-                    <option value=1>January </option>
-                    <option value=2>February </option>
-                    <option value=3>March </option>
-                    <option value=4>April </option>
-                    <option value=5>May </option>
-                    <option value=6>June </option>
-                    <option value=7>July </option>
-                    <option value=8>August </option>
-                    <option value=9>September </option>
-                    <option value=10>October </option>
-                    <option value=11>November </option>
-                    <option value=12>December </option>
                 </select>
             </div>
             <div class="form-group" id="genreDiv" style="display: none">
@@ -186,32 +155,8 @@
     <div>
         <div id="chart-container">FusionCharts will render here</div>
     </div>
-
-    <br/>
-    <br/>
-    <h2>Queries with Visualization</h2>
-    <div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">List of Querys</label>
-                <select class="form-control form-control-lg" id="mysqlQuery" onchange="selectQuery1();">
-                    <option>Please Select a values</option>
-                    <option value="1">What are the top 25 rated games in the past 20 years?</option>
-                    <option value="2">What are the games with score>8, editor_choice=y</option>
-                    <option value="3">What is the amount of games by each genre?</option>
-                    <option value="4">What is the average score rating  by each genre?</option>
-                    <option value="5">What are the top 5 popular genres? (editor's choice and average rating both)</option>
-                     <option value="6">What are the top 5 popular genres based on average rating ? </option>
-                    <option value="8">*How has the popularity of genre has changed over the last 20 years? </option>
-                    <option value="9">*What is the most popular genre with respect to a platform?</option>
-                    <option value="10">*Which platforms has the avg rating of games of more than ratings</option>
-                    <option value="11">*What number of games are released on each platform annually?</option>
-                     <option value="12">How many games were released in each year?</option>
-                    <option value="13">// How many games were released each year more than a particular rating</option>
-                    <!--<option value="14"></option>
-                    <option value="15"></option> -->
-
-
-                    
-                </select>
-            </div>
+    <br><br>
+    <div id="AnsweId" style="display: none">
+        <h3 id="answer"></h3>
+    </div>
 </div>

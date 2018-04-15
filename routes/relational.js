@@ -216,9 +216,6 @@ router.get('/mysqlquery12', function(req, res) {
 });
 
 // How many games were released each year more than a particular rating?(high rated is rating >=8 --
-
-
-
 router.get('/mysqlquery13', function(req, res) {
 
     var rating = req.query.rating;
@@ -235,65 +232,131 @@ router.get('/mysqlquery13', function(req, res) {
             res.send(results);
         }); 
 });
+
+
+// -- No of games in each month for particular year and rating
 router.get('/mysqlquery14', function(req, res) {
+    year = req.query.year;
+    rating = req.query.rating;
 
-    db.query("SELECT G.genre as label, AVG(F.average_score) AS value FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre LIMIT 5", function(err, results, feilds) {
-         if (err) {
-                console.error(err);
-                res.statusCode = 500;
-                res.send({
-                    result: 'error',
-                    err:    err.code
-                });
-            }
-            
-            res.send(results);
-        }); 
+    db.query("SELECT T.year, T.month as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F WHERE F.time_id = T.time_id AND T.year = "+year+" AND F.average_score = "+rating+" GROUP BY T.year, T.month", function(err, results, feilds) {
+     if (err) {
+            console.error(err);
+            res.statusCode = 500;
+            res.send({
+                result: 'error',
+                err:    err.code
+            });
+        }
+        
+        res.send(results);
+    }); 
+
 });
+
+// -- No of games in each month for particular year and genre
 router.get('/mysqlquery15', function(req, res) {
+    year = req.query.year;
+    genre = req.query.genre;
 
-    db.query("SELECT G.genre as label, AVG(F.average_score) AS value FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre LIMIT 5", function(err, results, feilds) {
-         if (err) {
-                console.error(err);
-                res.statusCode = 500;
-                res.send({
-                    result: 'error',
-                    err:    err.code
-                });
-            }
-            
-            res.send(results);
-        }); 
+    db.query("SELECT T.year, T.month as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F, game_dimension G WHERE F.time_id = T.time_id AND T.year = "+year+" AND F.game_id = G.game_id AND G.genre = '"+genre+"' GROUP BY T.year, T.month", function(err, results, feilds) {
+     if (err) {
+            console.error(err);
+            res.statusCode = 500;
+            res.send({
+                result: 'error',
+                err:    err.code
+            });
+        }        
+        res.send(results);
+    }); 
+
 });
+
+// -- No of games in each month for particular year and platform
 router.get('/mysqlquery16', function(req, res) {
+    year = req.query.year;
+    platform = req.query.platform;
 
-    db.query("SELECT G.genre as label, AVG(F.average_score) AS value FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre LIMIT 5", function(err, results, feilds) {
-         if (err) {
-                console.error(err);
-                res.statusCode = 500;
-                res.send({
-                    result: 'error',
-                    err:    err.code
-                });
-            }
-            
-            res.send(results);
-        }); 
+    db.query("SELECT T.year, T.month as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F, game_dimension G WHERE F.time_id = T.time_id AND T.year = "+year+" AND F.game_id = G.game_id AND G.Platform = '"+platform+"' GROUP BY T.year, T.month", function(err, results, feilds) {
+     if (err) {
+            console.error(err);
+            res.statusCode = 500;
+            res.send({
+                result: 'error',
+                err:    err.code
+            });
+        }        
+        res.send(results);
+    }); 
+
 });
+
+
+// -- No of games in each month for particular year and rating and genre
 router.get('/mysqlquery17', function(req, res) {
+    year = req.query.year;
+    genre = req.query.genre;
+    rating = req.query.rating;
 
-    db.query("SELECT G.genre as label, AVG(F.average_score) AS value FROM game_dimension G, fact F WHERE G.game_id = F.game_id GROUP BY G.genre LIMIT 5", function(err, results, feilds) {
-         if (err) {
-                console.error(err);
-                res.statusCode = 500;
-                res.send({
-                    result: 'error',
-                    err:    err.code
-                });
-            }
-            
-            res.send(results);
-        }); 
+    db.query("SELECT T.year, T.month as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F, game_dimension G WHERE F.time_id = T.time_id AND T.year = "+year+" AND F.game_id = G.game_id AND G.genre = '"+genre+"' AND F.average_score = "+rating+" GROUP BY T.year, T.month", function(err, results, feilds) {
+     if (err) {
+            console.error(err);
+            res.statusCode = 500;
+            res.send({
+                result: 'error',
+                err:    err.code
+            });
+        }        
+        res.send(results);
+    }); 
+
 });
+
+
+// -- No of games in each month for particular year and rating and genre and platform
+router.get('/mysqlquery18', function(req, res) {
+    year = req.query.year;
+    genre = req.query.genre;
+    platform = req.query.platform;
+
+    db.query("SELECT T.year, T.month as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F, game_dimension G WHERE F.time_id = T.time_id AND T.year = "+year+" AND F.game_id = G.game_id AND G.genre = '"+genre+"' AND G.Platform = '"+platform+"' GROUP BY T.year, T.month", function(err, results, feilds) {
+     if (err) {
+            console.error(err);
+            res.statusCode = 500;
+            res.send({
+                result: 'error',
+                err:    err.code
+            });
+        }        
+        res.send(results);
+    }); 
+
+});
+
+
+
+// -- No of games in each month for particular year and rating and genre and platform
+router.get('/mysqlquery19', function(req, res) {
+    year = req.query.year;
+    genre = req.query.genre;
+    rating = req.query.rating;
+    platform = req.query.platform;
+
+    db.query("SELECT T.year, T.month as label, COUNT(F.game_id) AS value FROM time_dimension T, fact F, game_dimension G WHERE F.time_id = T.time_id AND T.year = "+year+" AND F.game_id = G.game_id AND G.genre = '"+genre+"' AND F.average_score = '"+rating+"' AND G.Platform = '"+platform+"' GROUP BY T.year, T.month", function(err, results, feilds) {
+     if (err) {
+            console.error(err);
+            res.statusCode = 500;
+            res.send({
+                result: 'error',
+                err:    err.code
+            });
+        }        
+        res.send(results);
+    }); 
+
+});
+
+
 
 module.exports = router;
