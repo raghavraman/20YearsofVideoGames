@@ -24,14 +24,56 @@ var factSchema = mongoose.Schema({
 	count_editor_choice : Number
 });
 
+var gameDimeSchema = mongoose.Schema({
+
+	game_id : Number,
+	title : String,
+	genre : String,
+	platform: String
+
+});
 
 var Fact = mongoose.model('fact',factSchema,'fact');
+var Game = mongoose.model('game_dimension',gameDimeSchema,'game_dimension');
+
+
+
+//ALL QUERIES GOES HERE
+
+
+router.get('/mongo',function(req,res){
+    res.render('mongo',{activeMongo:"active"});
+});
+
 
 router.get('/mongoquery1', function(req, res) {
 
-    Fact.find().limit(20).then(function(fact){
-    	console.log(fact);
-    	res.send(fact);
+    var resArray = [];
+    Fact.aggregate([{ '$sort': { 'average_score': -1 } },
+    				{ '$lookup': 
+    					{ 'localField': 'game_id', 
+    					  'from':'game_dimension',
+    					  'foreignField':'game_id',
+    					  'as':'top25'
+    					} 
+    				},
+    				{
+    					'$unwind':"$top25"
+    				},
+    				{
+    					'$project':
+    					{
+    						'label':'$top25.title',
+    						'value':"$average_score"
+    					}
+    				}
+    				]).limit(25).then(function(fact){
+   	
+    	var resArray = [];
+    	fact.forEach(function(u) {
+        	resArray.push({'label':u.label,'value':u.value});
+    	});
+    	res.send(resArray);
     }).catch(function(error) {
         console.error(error);
     });
