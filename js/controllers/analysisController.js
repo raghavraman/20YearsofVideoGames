@@ -2,6 +2,12 @@ function renderGraph() {
     var query = $("#mysqlQuery").val();
     if (query) {
 
+        $("#mysql").html("");
+        $("#mysqlV").html("");
+        $("#neo").html("");
+        $("#neoV").html("");
+         $("#mongoV").html("");
+         $("#mongo").html("");
 
 	   mysqlqueryurl1 = 'http://localhost:3000/performmysql' + query;
        mysqlqueryurl2 = 'http://localhost:3000/performmysqlV' + query;

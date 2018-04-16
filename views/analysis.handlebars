@@ -37,23 +37,23 @@
             <select class="form-control form-control-lg" id="mysqlQuery" onchange="renderGraph();">
                 <option>Please Select a values</option>
                 <option value="1">What are the top 25 rated games in the past 20 years?</option>
-                <option value="2">What are the games with score>8, editor_choice=y</option>
-                <option value="3">What is the amount of games by each genre?</option>
+                <option value="2">What are the top 5 popular genres based on average rating ?</option>
+                <option value="3">What are the top 5 popular Platform based on average rating ? </option>
                 <option value="4">What are the top 5 popular genres based on editor's choice ?</option>
-                <option value="5">Which is the year with the greatest avg_rating -</option>
+                <option value="5">Which is the year with the greatest avg_rating</option>
             </select>
         </div>
     </div>
     <h3>The Result are given in milliseconds</h3>
      <div id="Results">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">MYSQL Without View</th>
+        <table class="table table-bordered table-dark">
+          <thead class="thead-dark">
+            <tr class="table-active">
+              <th scope="col">MYSQL</th>
               <th scope="col">MYSQL With View</th>
-              <th scope="col">NEO4J Without View</th>
+              <th scope="col">NEO4J </th>
               <th scope="col">NEO4j With View</th>
-              <th scope="col">Mongo Without View</th>
+              <th scope="col">Mongo </th>
               <th scope="col">Mongo With View</th>
             </tr>
           </thead>
