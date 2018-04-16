@@ -16,7 +16,6 @@
                     <li class="{{activeRelational}}"><a href="/relational">MySQL</a></li>
                     <li class="{{activeMongoDB}}"><a href="/mongo">MongoDB</a></li>
                     <li class="{{activeNeo}}"><a href="/neo">Neo4j</a></li>
-                    <li class="{{activeAnaly}}"><a href="/analysis">Analysis</a></li>
                 </ul>
             </div>
         </div>
@@ -27,20 +26,20 @@
     <h1>Welcome!</h1>
     <p>The video game data set contains the past 20 years of game reviews from IGN. Discover and analyze trends in the gaming industry with games, platforms, genres, ratings, and dates.
 </p>
-    <div id="summary">
+    <div id="summary" onclick="summary1();">
         <h3> Distribution of Number of Games in Each Year</h3>
     </div>
-    <div >
+    <div onclick="summary2();">
         <h3> Distribution Genres</h3>
         <p>A minimum of 500 games in each genre is selcted and grouped</p>
         <svg id="summary2" width="800" height="600"></svg>
     </div>
-     <div >
+     <div onclick="summary3();">
         <h3> Distribution Platform</h3>
         <p>Platform with minimum 500 games are selcted and grouped</p>
         <svg id="summary3" width="800" height="600"></svg>
     </div>
-    <div>
+    <div onclick="summary4();">
         <h3> Distribution by Score Phrase</h3>
         <p>List of Score Phrase and the games by the count</p>
         <svg id="summary4" width="800" height="600"></svg>
@@ -141,7 +140,7 @@ d3.json(url, function(error, data) {
 
 });
 }
-summary1();
+// summary1();
 </script>
 <script>
 function summary2() {
@@ -197,7 +196,7 @@ d3.json(url, function(error, data) {
 });
 
 }
-summary2();
+// summary2();
 </script>
 <script>
 function summary3() {
@@ -253,7 +252,7 @@ d3.json(url, function(error, data) {
 });
 
 }
-summary3();
+// summary3();
 </script>
 <script>
 function summary4() {
@@ -308,5 +307,5 @@ d3.json(url, function(error, data) {
 });
 
 }
-summary4();
+// summary4();
 </script>

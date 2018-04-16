@@ -9,6 +9,10 @@ function renderGraph() {
        neoq = 'http://localhost:3000/neoPerform' + query;
        neoqV = 'http://localhost:3000/neoPerformV' + query;
 
+       mongo = 'http://localhost:3000/mongoperform' + query;
+       mongoV = 'http://localhost:3000/mongoperformV' + query;
+
+
 		$.ajax({
             url: mysqlqueryurl1,
             type: 'GET',
@@ -47,6 +51,28 @@ function renderGraph() {
             success: function(data) {
                 
                 $("#neoV").html(data.result);
+                
+            }
+        });
+
+
+        $.ajax({
+            url: mongo,
+            type: 'GET',
+            success: function(data) {
+                
+                $("#mongo").html(data.fact);
+
+                
+            }
+        });
+
+        $.ajax({
+            url: mongoV,
+            type: 'GET',
+            success: function(data) {
+                
+                $("#mongoV").html(data.fact);
                 
             }
         });
