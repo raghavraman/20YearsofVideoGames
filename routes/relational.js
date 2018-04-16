@@ -329,7 +329,7 @@ router.get('/mysqlquery18', function(req, res) {
                 err:    err.code
             });
         }        
-        res.send(results);
+        res.send(JSON.stringify(results));
     }); 
 
 });
