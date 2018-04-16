@@ -1,3 +1,5 @@
+var mongoose = require('mongoose'),     //mongo
+    fs = require('fs'),                 //mongo
 var mysqldb = require('../db');
 var express = require('express')
 var router = express.Router();
@@ -375,5 +377,61 @@ router.get('/neoPerformV5',function(req, res){
     
     
 });
+//--mongo------
+
+// query 1 : top 25 games
+router.get('/mongoPerform1', function(req, res) {
+var start = new Date().getTime();
+    Fact.aggregate([{ '$sort': { 'average_score': -1 } },
+                    { '$lookup': 
+                        { 'localField': 'game_id', 
+                          'from':'game_dimension',
+                          'foreignField':'game_id',
+                          'as':'top25'
+                        } 
+                    },
+                    {
+                        '$unwind':"$top25"
+                    },
+                    {
+                        '$project':
+                        {
+                            'label':'$top25.title',
+                            'value':"$average_score"
+                        }
+                    }
+                    ]).limit(25).then(function(fact){
+    
+        var resArray = [];
+        fact.forEach(function(u) {
+             var elapsed = new Date().getTime() - start;
+            var answer = { "fact" : elapsed };
+        });
+        res.send(answer);
+    }).catch(function(error) {
+        console.error(error);
+    });
+
+});
+
+//view1 top 25 games
+
+router.get('/mongoPerformV1', function(req, res) {
+var start = new Date().getTime();
+    top25game.find({}).limit(25).then(function(top25games){
+    
+        var resArray = [];
+        top25games.forEach(function(u) {
+            var elapsed = new Date().getTime() - start;
+            var answer = { "top25games" : elapsed };
+        });
+        res.send(answer);
+    }).catch(function(error) {
+        console.error(error);
+    });
+
+});
+
+
 
 module.exports = router;
