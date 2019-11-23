@@ -16,7 +16,7 @@
     "cypher-stream": "^1.1.0",
     "express": "^4.17.1",
     "express-handlebars": "^3.0.0",
-    "express-session": "^1.15.6",
+    "express-session": "^1.17.0",
     "handlebars": "^4.0.11",
     "mongoose": "^5.0.14",
     "mysql": "^2.15.0",
